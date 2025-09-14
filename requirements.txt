@@ -1,0 +1,6 @@
+flask
+google-generativeai
+pandas
+torch
+sentence-transformers
+Pillow

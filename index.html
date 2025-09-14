@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicine Substitute Finder</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 0; background-color: #f8f9fa; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 800px; margin: 2em; }
+        .card { background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 2em; margin-bottom: 2em; }
+        h1, h2 { color: #333; }
+        h1 { text-align: center; }
+        input[type="file"], input[type="text"] { width: 100%; padding: 10px; margin-bottom: 1em; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        input[type="submit"] { width: 100%; padding: 12px; border: none; border-radius: 4px; background-color: #007bff; color: white; font-size: 16px; cursor: pointer; }
+        input[type="submit"]:hover { background-color: #0056b3; }
+        .results { margin-top: 1em; border-top: 2px solid #e9ecef; padding-top: 1em; }
+        .results ul { list-style-type: none; padding: 0; }
+        .results li { background-color: #e9ecef; padding: 10px; border-radius: 4px; margin-bottom: 8px; }
+        .results strong { color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Medicine Substitute Finder 💊</h1>
+
+        <!-- Card for Image Upload -->
+        <div class="card">
+            <h2>Option 1: Upload a Prescription Image</h2>
+            <form action="/upload_image" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <input type="submit" value="Analyze Prescription">
+            </form>
+        </div>
+
+        <!-- Card for Text Input -->
+        <div class="card">
+            <h2>Option 2: Enter a Medicine Name</h2>
+            <form action="/find_substitute" method="post">
+                <input type="text" name="medicine" placeholder="e.g., albendazol 40mg" required>
+                <input type="submit" value="Find Substitute">
+            </form>
+        </div>
+
+        <!-- Results Display Area -->
+        {% if title %}
+        <div class="card results">
+            <h2>{{ title }}</h2>
+            {% if results %}
+                <ul>
+                {% for medicine, substitute in results.items() %}
+                    <li><strong>{{ medicine }}</strong> &rarr; {{ substitute }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>Could not find any medicines or substitutes.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
